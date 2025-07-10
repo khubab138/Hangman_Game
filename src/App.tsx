@@ -3,8 +3,17 @@ import words from "./WordList.json";
 import HangmanDrawing from "./Components/HangmanDrawing";
 import HangmanWords from "./Components/HangmanWords";
 import Keyboard from "./Components/Keyboard";
-
+import { useDispatch, useSelector } from "react-redux";
+import {wordGuess} from "./Redux/Slices/Slice"
+import type { RootState } from "./Redux/Store";
 const App = () => {
+
+  const word = useSelector((state : RootState) => state.words.getword)
+  const dispatch = useDispatch()
+
+
+
+
 
   const getword = () => words[Math.floor(Math.random() * words.length)]
 
@@ -73,7 +82,22 @@ const App = () => {
         {isWinner && 'Winner! - Refresh To Try Again'}
         {isloser && 'Nice Try - Refresh To Try Again'}
       </div>
+       
+<center>
+        <h1>Word: {word[0]} </h1>
+        <button className="bg-green-300 rounded-2xl p-4 text-2xl font-bold" onClick={() => dispatch(wordGuess())}>Generate Word</button>
+      </center>
 
+
+
+
+
+
+
+
+
+
+       
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
       <HangmanWords Reveal={isloser} guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
       <div className="self-stretch">
